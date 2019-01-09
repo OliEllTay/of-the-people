@@ -20,8 +20,8 @@ read_ipu_csv <- function(file){
                          skip = 3)
   
   raw %>%
-    dplyr::mutate(statisic = stat_name) %>%
-    select(country, statisic, value)
+    dplyr::mutate(statistic = stat_name) %>%
+    select(country, statistic, value)
   
 }
 
