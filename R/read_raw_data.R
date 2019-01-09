@@ -1,31 +1,44 @@
 library(dplyr)
 
-read_ipu_csv <- function(file, data_name){
+parse_ipu_filename <- function(filename){
+  
+  split1 <- strsplit(filename, "--")
+  
+  split2 <- strsplit(split1[[1]][2], ".csv")[[1]][1]
+  
+  paste0("chamber_", split2)
+}
+
+read_ipu_csv <- function(file){
   #' Read the raw file format from IPU
   #'
   
-  readr::read_csv(file,
-                  col_names = c("country", "chamber_name", data_name),
-                  skip = 3)
+  stat_name <- parse_ipu_filename(file)
+  
+  raw <- readr::read_csv(file,
+                         col_names = c("country", "chamber", "value"),
+                         skip = 3)
+  
+  raw %>%
+    dplyr::mutate(statisic = stat_name) %>%
+    select(country, statisic, value)
+  
 }
 
 read_world_bank_indicator_csv <- function(file){
   #'  Read the population percentage of women raw file
   #'  
   
-  keep_cols <- c("Country Name", "Country Code", "2017")
+  keep_cols <- c("Country Name", "Indicator Code", "2017")
   
   raw <- readr::read_csv(file,
                          col_names = TRUE,
                          skip = 4)
   
-  
-  indicator_code <- unique(raw[, "Indicator Code"])[1]
-  
   raw <- raw %>%
     dplyr::select(keep_cols)
   
-  names(raw) <- c("Country Name", "Country Code", indicator_code)
+  names(raw) <- c("country", "statistic", "value")
   
   raw
 }
