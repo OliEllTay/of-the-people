@@ -1,9 +1,13 @@
-
+PFont helvetica;
 CountryPoint cp;
 
 void setup() {
   size(500, 500);
-  cp = new CountryPoint(150, 150, 300, 0.3, 0.4, 0.5, 1);
+  cp = new CountryPoint("Country with extra text", 150, 150, 50, 0.3, 0.4, 0.5, 1);
+  
+  //"HelveticaNeue-Light"
+  helvetica = createFont("HelveticaNeue-Light", 32);
+  textFont(helvetica);
 }
 
 void draw() {
@@ -16,8 +20,9 @@ void draw() {
 class CountryPoint {
   float xloc, yloc, sz, s1, s2, s3, s4, r;
   color cl1, cl2;
+  String nm;
 
-  CountryPoint(float x, float y, float size, float seg1, float seg2, float seg3, float seg4) {
+  CountryPoint(String name, float x, float y, float size, float seg1, float seg2, float seg3, float seg4) {
     xloc = x;
     yloc = y;
     sz = size;
@@ -25,6 +30,7 @@ class CountryPoint {
     s2 = seg2;
     s3 = seg3;
     s4 = seg4;
+    nm = name;
   }
 
   void display() {
@@ -47,5 +53,12 @@ class CountryPoint {
     noFill();
     stroke(50);
     ellipse(xloc, yloc, r, r);
+    
+    // name text
+    textSize(r / 5);
+    textLeading(r / 5);
+    rectMode(CENTER);
+    textAlign(CENTER, CENTER);
+    text(nm, xloc, yloc - 0.9 * r, 1.25 * r, r);
   }
 }
