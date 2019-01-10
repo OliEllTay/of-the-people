@@ -15,6 +15,7 @@ void draw() {
 
 class CountryPoint {
   float xloc, yloc, sz, s1, s2, s3, s4, r;
+  color cl1, cl2;
 
   CountryPoint(float x, float y, float size, float seg1, float seg2, float seg3, float seg4) {
     xloc = x;
@@ -29,10 +30,14 @@ class CountryPoint {
   void display() {
     
     r = sz / 2;
+    cl1 = 50;
+    cl2 = 25;
     
+    fill(cl1);
     arc(xloc, yloc, r * s1, r * s1, 0, HALF_PI);
-    arc(xloc, yloc, r * s2, r * s2, HALF_PI, PI);
     arc(xloc, yloc, r * s3, r * s3, PI, PI + HALF_PI);
+    fill(cl2);
+    arc(xloc, yloc, r * s2, r * s2, HALF_PI, PI);
     arc(xloc, yloc, r * s4, r * s4, HALF_PI + PI, TWO_PI);
   }
 }
