@@ -3,7 +3,7 @@ CountryPoint cp;
 
 void setup() {
   size(500, 500);
-  cp = new CountryPoint(150, 150, 300, 0.3, 0.4, 0.5, 0.6);
+  cp = new CountryPoint(150, 150, 300, 0.3, 0.4, 0.5, 1);
 }
 
 void draw() {
@@ -29,15 +29,23 @@ class CountryPoint {
 
   void display() {
     
-    r = sz / 2;
+    r = sz;
     cl1 = 50;
     cl2 = 25;
     
+    // circle segments
+    noStroke();
     fill(cl1);
-    arc(xloc, yloc, r * s1, r * s1, 0, HALF_PI);
-    arc(xloc, yloc, r * s3, r * s3, PI, PI + HALF_PI);
+    arc(xloc, yloc, r * sqrt(s1), r * sqrt(s1), 0, HALF_PI);
+    arc(xloc, yloc, r * sqrt(s3), r * sqrt(s3), PI, PI + HALF_PI);
     fill(cl2);
-    arc(xloc, yloc, r * s2, r * s2, HALF_PI, PI);
-    arc(xloc, yloc, r * s4, r * s4, HALF_PI + PI, TWO_PI);
+    arc(xloc, yloc, r * sqrt(s2), r * sqrt(s2), HALF_PI, PI);
+    arc(xloc, yloc, r * sqrt(s4), r * sqrt(s4), HALF_PI + PI, TWO_PI);
+    
+    // 100% guide
+    ellipseMode(CENTER);
+    noFill();
+    stroke(50);
+    ellipse(xloc, yloc, r, r);
   }
 }
