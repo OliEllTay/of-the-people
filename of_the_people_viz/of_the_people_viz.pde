@@ -3,7 +3,7 @@ CountryPoint cp;
 
 void setup() {
   size(500, 500);
-  cp = new CountryPoint("Country with extra text", 150, 150, 50, 0.3, 0.4, 0.5, 1);
+  cp = new CountryPoint("Country with extra text", 200, 200, 150, 0.3, 0.4, 0.5, 1);
   
   //"HelveticaNeue-Light"
   helvetica = createFont("HelveticaNeue-Light", 32);
@@ -37,7 +37,7 @@ class CountryPoint {
     
     r = sz;
     cl1 = 50;
-    cl2 = 25;
+    cl2 = 100;
     
     // circle segments
     noStroke();
@@ -51,8 +51,12 @@ class CountryPoint {
     // 100% guide
     ellipseMode(CENTER);
     noFill();
-    stroke(50);
+    stroke(100);
     ellipse(xloc, yloc, r, r);
+    
+    // 50% guide
+    stroke(255);
+    ellipse(xloc, yloc, sqrt(0.5) * r, sqrt(0.5) * r);
     
     // name text
     textSize(r / 5);
