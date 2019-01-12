@@ -25,11 +25,26 @@ viz_data <- function(){
         TRUE ~ `SP.POP.2024.FE.5Y` + `SP.POP.2024.MA.5Y` + `SP.POP.2529.FE.5Y` + `SP.POP.2529.MA.5Y` + `SP.POP.3034.FE.5Y` + `SP.POP.3034.MA.5Y` + `SP.POP.3539.FE.5Y` + `SP.POP.3539.MA.5Y`
       )
     ) %>%
-    select(country, 
+    select(country,
+           region,
            pop_women,
            par_women,
            pop_u40,
            par_u40)
+  
+  # Placement ID
+  data <- data %>%
+    dplyr::mutate(placement_id = row_number())
+  
+  # Point locations
+  n_countries <- nrow(data)
+  source(here::here("R","point_locations.R"), local = TRUE)
+  locs <- point_coordinates(n = n_countries,
+                            rows = 6)
+  data <- data %>%
+    left_join(locs)
+  
+  data
 
 }
 

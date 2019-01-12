@@ -65,7 +65,16 @@ combined_raw_data <- function(){
   # Combine data sources
   tall <- rbind(ipu_data, world_bank_data)
   
-  tall %>%
+  # Spread stats
+  country_stat <- tall %>%
     dplyr::mutate(country = country_name_conversions(country)) %>%
     tidyr::spread(key = statistic, value = value)
+  
+  # Regions
+  reg <- readr::read_csv(here::here("raw-data","country_regions.csv"))
+  country_stat <- country_stat %>%
+    dplyr::left_join(reg)
+  
+  country_stat
+  
 }
