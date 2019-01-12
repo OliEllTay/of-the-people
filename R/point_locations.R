@@ -16,11 +16,15 @@ point_coordinates <- function(n, rows, width, height){
     for(j in 1:rows){
       iter = iter + 1
       if(iter <= n){
-        locs$x[iter] <- (j - 1) * y_step
-        locs$y[iter] <- (i - 1) * x_step
+        locs$x[iter] <- (i - 1) * x_step
+        locs$y[iter] <- (j - 1) * y_step
       }
     }
   }
   
   locs
 }
+
+
+
+
