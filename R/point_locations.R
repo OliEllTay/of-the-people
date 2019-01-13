@@ -2,8 +2,8 @@
 
 point_coordinates <- function(n, rows){
   
-  width <- 1500
-  height <- 600
+  width <- 1000
+  height <- 400
   
   locs <- data_frame(placement_id = 1:n,
                      x = 0,
