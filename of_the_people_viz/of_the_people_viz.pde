@@ -103,7 +103,7 @@ color[] region_color(String country_region)
 class CountryPoint {
   float xloc, yloc, sz, s1, s2, s3, s4, r;
   String nm, rg;
-  color c1, c2;
+  color c1, c2, guide_col;
 
   CountryPoint(String name, float x, float y, float size, float seg1, float seg2, float seg3, float seg4, color col1, color col2) {
     xloc = x;
@@ -125,18 +125,25 @@ class CountryPoint {
     
     // circle segments
     noStroke();
+    /*
     fill(c2);
     arc(xloc, yloc, r * sqrt(s1), r * sqrt(s1), 0, HALF_PI);
     arc(xloc, yloc, r * sqrt(s3), r * sqrt(s3), PI, PI + HALF_PI);
     fill(c1);
     arc(xloc, yloc, r * sqrt(s2), r * sqrt(s2), HALF_PI, PI);
     arc(xloc, yloc, r * sqrt(s4), r * sqrt(s4), HALF_PI + PI, TWO_PI);
+    */
     
+    ellipseMode(CENTER);
+    fill(c1);
+    ellipse(xloc, yloc, r * sqrt(s1), r * sqrt(s1));
     
     // 100% guide
     ellipseMode(CENTER);
     noFill();
-    stroke(c1);
+    guide_col = c1;
+    if(s1 > 1.0){ guide_col = color(255); }
+    stroke(guide_col);
     ellipse(xloc, yloc, r, r);
     
     // name text
