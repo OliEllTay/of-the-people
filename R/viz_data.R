@@ -25,21 +25,27 @@ viz_data <- function(){
         TRUE ~ `SP.POP.2024.FE.5Y` + `SP.POP.2024.MA.5Y` + `SP.POP.2529.FE.5Y` + `SP.POP.2529.MA.5Y` + `SP.POP.3034.FE.5Y` + `SP.POP.3034.MA.5Y` + `SP.POP.3539.FE.5Y` + `SP.POP.3539.MA.5Y`
       )
     ) %>%
+    dplyr::mutate(
+      rep_women = par_women / pop_women,
+      rep_u40 = par_u40 / pop_u40,
+      rep_lgbt = 0.4,
+      rep_min = 0.3
+    ) %>%
     select(country,
            region,
-           pop_women,
-           par_women,
-           pop_u40,
-           par_u40)
+           rep_women,
+           rep_u40,
+           rep_lgbt,
+           rep_min)
   
   # Placement ID
+  plcm <- readr::read_csv(here::here("raw-data","country_placement.csv"))
   data <- data %>%
-    dplyr::mutate(placement_id = row_number())
+    dplyr::left_join(plcm)
   
   # Point locations
-  n_countries <- nrow(data)
   source(here::here("R","point_locations.R"), local = TRUE)
-  locs <- point_coordinates(n = n_countries,
+  locs <- point_coordinates(n = 120,
                             rows = 6)
   data <- data %>%
     left_join(locs)
