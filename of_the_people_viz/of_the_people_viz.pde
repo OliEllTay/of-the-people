@@ -3,7 +3,7 @@ import processing.pdf.*;          // Import PDF code
 PFont helvetica;
 CountryPoint[] cp_store;
 Table viz_data;
-float x, y, margin_x, margin_y, rep_women, rep_u40, rep_lgbt, rep_min;
+float x, y, rotation, margin_x, margin_y, rep_women, rep_u40, rep_lgbt, rep_min;
 int n_countries;
 String country_name, region;
 color[] rg_cols;
@@ -25,6 +25,7 @@ void setup() {
     TableRow row = viz_data.getRow(i);
     x = row.getFloat("x") + margin_x;
     y = row.getFloat("y") + margin_y;
+    rotation = row.getFloat("rotation");
     country_name = row.getString("country");
     region = row.getString("region");
     rep_women = row.getFloat("rep_women");
@@ -36,7 +37,7 @@ void setup() {
     col_dark = rg_cols[0];
     col_light = rg_cols[1];
     
-    cp_store[i] = new CountryPoint(country_name, x, y, 40, rep_women, rep_u40, rep_lgbt, rep_min, col_dark, col_light);
+    cp_store[i] = new CountryPoint(country_name, x, y, rotation, 40, rep_women, rep_u40, rep_lgbt, rep_min, col_dark, col_light);
   }
   
   //"HelveticaNeue-Light"
@@ -105,13 +106,14 @@ color[] region_color(String country_region)
 
 
 class CountryPoint {
-  float xloc, yloc, sz, s1, s2, s3, s4, r;
+  float xloc, yloc, rot, sz, s1, s2, s3, s4, r;
   String nm, rg;
   color c1, c2, guide_col;
 
-  CountryPoint(String name, float x, float y, float size, float seg1, float seg2, float seg3, float seg4, color col1, color col2) {
+  CountryPoint(String name, float x, float y, float rotation, float size, float seg1, float seg2, float seg3, float seg4, color col1, color col2) {
     xloc = x;
     yloc = y;
+    rot = rotation;
     sz = size;
     s1 = seg1;
     s2 = seg2;
@@ -155,6 +157,10 @@ class CountryPoint {
     textLeading(r / 5);
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
-    text(nm, xloc, yloc - 0.9 * r, 1.25 * r, r);
+    pushMatrix();
+    translate(xloc, yloc);
+    rotate(rot + HALF_PI);
+    text(nm, 0, - 0.9 * r, 1.25 * r, r);
+    popMatrix();
   }
 }
