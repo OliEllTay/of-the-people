@@ -1,3 +1,5 @@
+import processing.pdf.*;          // Import PDF code
+
 PFont helvetica;
 CountryPoint[] cp_store;
 Table viz_data;
@@ -8,7 +10,7 @@ color[] rg_cols;
 color col_light, col_dark;
 
 void setup() {
-  size(1200, 1200);
+  size(2000, 2000, PDF, "exp_of_the_people.pdf");
   
   margin_x = 50;
   margin_y = 50;
@@ -46,6 +48,8 @@ void setup() {
   for (int i = 0; i<n_countries; i++) {
     cp_store[i].display();
   }
+  
+  exit();
   
 }
 
