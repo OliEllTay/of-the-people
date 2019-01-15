@@ -45,7 +45,7 @@ point_coordinates <- function(n, rows){
     }
   }
   
-  shft_x <- abs(min(locs$x))
+  shft_x <- abs(min(locs$x)) + (width - abs(max(locs$x) - min(locs$x))) / 2
   shft_y <- abs(min(locs$y))
   
   locs %>%
