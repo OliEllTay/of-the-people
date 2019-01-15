@@ -12,8 +12,8 @@ color col_light, col_dark;
 void setup() {
   size(2000, 2000, PDF, "exp_of_the_people.pdf");
   
-  margin_x = 50;
-  margin_y = 50;
+  // margin_x = 100;
+  margin_y = 100;
   
   rg_cols = new color[2];
   
@@ -69,7 +69,7 @@ color[] region_color(String country_region)
   color_light = #FACC6B;
   
   if(country_region.equals("Europe")){
-    color_dark = #1D3461;
+    color_dark = #003399;
     color_light = #1F487E;
   }
   
