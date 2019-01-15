@@ -1,6 +1,6 @@
 import processing.pdf.*;          // Import PDF code
 
-PFont helvetica;
+PFont helvetica, didot;
 CountryPoint[] cp_store;
 Table viz_data;
 float x, y, rotation, margin_x, margin_y, rep_women, rep_u40, rep_lgbt, rep_min;
@@ -49,6 +49,18 @@ void setup() {
   for (int i = 0; i<n_countries; i++) {
     cp_store[i].display();
   }
+  
+  // title text
+  //"HelveticaNeue-Light"
+  didot = createFont("Didot-Italic", 32);
+  textFont(didot);
+  textSize(44);
+  textLeading(44);
+  fill(#536271);
+  rectMode(CENTER);
+  textAlign(LEFT, CENTER);
+  text("Of the people, By the people, For the people.", 1050, 650, 300, 300);
+  
   
   exit();
   
