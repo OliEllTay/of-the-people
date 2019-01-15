@@ -1,10 +1,23 @@
 
+missing_women_mps <- function(viz_data){
+  
+  d <- viz_data %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(missing = total_seats * (pop_women - par_women) / 100) %>%
+    dplyr::mutate(missing = dplyr::if_else(missing < 0, 0, missing)) %>%
+    dplyr::summarise(total_missing = sum(missing))
+  
+  #d$total_missing
+  d
+}
 
 viz_data <- function(){
   #' Build visualisation data set
   #' 
   
   source(here::here("R", "combine_raw_data.R"), local = TRUE)
+  source(here::here("R", "simplify_names.R"), local = TRUE)
+  
   
   # read and remove any NAs
   raw_data <- combined_raw_data() %>%
@@ -26,17 +39,17 @@ viz_data <- function(){
       )
     ) %>%
     dplyr::mutate(
+      total_seats = chamber_field_statutory_members_number,
       rep_women = par_women / pop_women,
-      rep_u40 = par_u40 / pop_u40,
-      rep_lgbt = 0.4,
-      rep_min = 0.3
+      rep_u40 = par_u40 / pop_u40
     ) %>%
     select(country,
            region,
+           pop_women,
+           par_women,
            rep_women,
            rep_u40,
-           rep_lgbt,
-           rep_min)
+           total_seats)
   
   # Placement ID
   plcm <- readr::read_csv(here::here("raw-data","country_placement.csv"))
@@ -50,7 +63,14 @@ viz_data <- function(){
   data <- data %>%
     left_join(locs)
   
-  data
+  missing_stat <- missing_women_mps(data)
+  
+  #print(paste0("Women MPs Missing: ", missing_stat))
+  #print(paste0("Total MPs: ", sum(data$total_seats)))
+  print(missing_stat)
+  
+  data  %>%
+    dplyr::mutate(country = simplify_country_names(country))
 
 }
 
