@@ -10,7 +10,7 @@ color[] rg_cols;
 color col_light, col_dark;
 
 void setup() {
-  size(2000, 2000, PDF, "exp_of_the_people.pdf");
+  size(2000, 900, PDF, "exp_of_the_people.pdf");
   
   // margin_x = 100;
   margin_y = 100;
